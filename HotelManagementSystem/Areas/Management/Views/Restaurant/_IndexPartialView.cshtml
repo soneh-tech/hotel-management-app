@@ -1,0 +1,61 @@
+﻿@model RestaurantViewModel
+<div class="tab-pane fade show active" id="food" role="tabpanel">
+    <div class="row">
+        @foreach (var food in Model.foods)
+        {
+            <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+                <div class="card mb-3">
+                    <img class="card-img-top img-fluid" alt="No Image Selected" src="~/images/products/@food.ImageURL" alt="" asp-append-version="true" />
+                    <div class="card-header">
+                        <h5 class="card-title">@food.ProductName</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3>
+                            # @food.UnitPrice <span>/Per Plate</span>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="card-text d-inline btn btn-danger" data-toggle="modal" data-target="@("#delete-" + @food.ProductID)" data-url="@Url.Action($"GetProduct/{food.ProductID}")">Delete</button>
+                        @await Html.PartialAsync("_DeleteProductPopup",food)
+
+                        @{
+                            var model = new ProductViewModel { Product = food };
+                        }
+                        <button type="button" class="btn btn-success text-white float-right" data-toggle="modal" data-target="@("#modify-" + @food.ProductID)" data-url="@Url.Action($"GetProduct/{food.ProductID}")">Modify</button>
+                        @await Html.PartialAsync("_ModifyProductPopup",model)
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="tab-pane fade" id="drink" role="tabpanel">
+    <div class="row">
+        @foreach (var drink in Model.drinks)
+        {
+            <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+                <div class="card mb-3">
+                    <img class="card-img-top img-fluid" alt="No Image Selected" src="~/images/products/@drink.ImageURL" alt="" asp-append-version="true" />
+                    <div class="card-header">
+                        <h5 class="card-title">@drink.ProductName</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3>
+                            # @drink.UnitPrice <span>/Per Bottle</span>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="card-text d-inline btn btn-danger" data-toggle="modal" data-target="@("#delete-" + @drink.ProductID)" data-url="@Url.Action($"GetProduct/{drink.ProductID}")">Delete</button>
+                        @await Html.PartialAsync("_DeleteProductPopup",drink)
+
+                        @{
+                            var model = new ProductViewModel { Product = drink };
+                        }
+                        <button type="button" class="btn btn-success text-white float-right" data-toggle="modal" data-target="@("#modify-" + @drink.ProductID)" data-url="@Url.Action($"GetProduct/{drink.ProductID}")">Modify</button>
+                        @await Html.PartialAsync("_ModifyProductPopup",model)
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

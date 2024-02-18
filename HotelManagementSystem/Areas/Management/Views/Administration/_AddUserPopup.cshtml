@@ -1,0 +1,52 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model AdminRegisterViewModel
+@{var id = ViewBag.RoleID;}
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form data-ajax="true" data-ajax-mode="replace" data-ajax-update="#example"
+                   data-ajax-success="OnSuccess" data-ajax-failure="OnFailure"
+                  data-ajax-method="post" asp-route-id="@id" asp-area="management"
+                  asp-action="register" asp-controller="account">
+                <div class="modal-header">
+                    <h5 class="modal-title">New User Details</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="FirstName">First Name</label>
+                            <input asp-for="FirstName" class="form-control" placeholder="first name">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="LastName">Last Name</label>
+                            <input asp-for="LastName" class="form-control" placeholder="last name">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Email">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="email@example.com">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Password">Default Password</label>
+                            <input class="form-control" value="Wallgate123#" disabled type="text">
+                            <input asp-for="Password" class="form-control" value="Wallgate123#" type="hidden">
+                            <input asp-for="ConfirmPassword" class="form-control" value="Wallgate123#" type="hidden">
+                        </div>
+                        </div>
+   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

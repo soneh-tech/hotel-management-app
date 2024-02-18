@@ -1,0 +1,104 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model SalesViewModel
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Restaurant Order</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Guest/Customer</label>
+                                        <select asp-for="Sale.CustomerID" asp-items="@Model.customers" class=".js-example-disabled">
+                                            <option value="0">Walk In...</option>
+                                        </select>
+                                        <span asp-validation-for="Sale.CustomerID" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label>Grand Total</label>
+                                        <input disabled id="txtGrandTotal" placeholder="0.00">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="content_div" class="table-responsive">
+                                                <partial name="_ItemPartialView" model="Model" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#txtQuantity').on("input", function () {
+                $('#txtTotal').val($('#txtPrice').val() * $('#txtQuantity').val());
+            });
+            $("#single-select").on("change", function () {
+                $.ajax({
+                    type: "Get",
+                    url: "@Url.Action("GetItem")",
+                    data: { id: $(this).val() },
+                    success: function (result) {
+                        console.log(result)
+                        $("#txtPrice").val(result.unitPrice);
+                        $('#txtTotal').val($('#txtPrice').val() * $('#txtQuantity').val());
+                    },
+                    error: function (err) { alert(err); }
+                });
+            });
+            $("#drp_categories").on("change", function () {
+                $.ajax({
+                    type: "Get",
+                    url: "@Url.Action("GetItems")",
+                    data: { id: $(this).val() },
+                    success: function (result) {
+                        $("#single-select").html(null);
+                        $.each(result, function (i, item) {
+                            $("#single-select").append('<option value="' + item.productID + '">' + item.productName + '</option>');
+                        });
+                    },
+                    error: function (err) { alert("no success"); }
+                });
+            });
+        });
+
+
+
+        //function OnSuccess(result) {
+        //    $(".close").click();
+        //    $("#content_div").html(result);
+        //    swal({
+        //        title: "Good Job !!!",
+        //        text: "your record was saved successfully",
+        //        type: "success"
+        //    });
+        //}
+        //function OnFailure() {
+        //    $(".close").click();
+        //    swal({
+        //        title: "Oops... ",
+        //        text: "something went wrong. please try again",
+        //        type: "wrong"
+        //    });
+        //}
+    </script>
+}

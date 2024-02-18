@@ -1,0 +1,55 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model AssignViewModel
+<div class="content-body">
+    <div class="container-fluid">
+
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Assign Room to Guest</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form method="post" asp-area="management" asp-action="assignroom" asp-controller="booking">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <input asp-for="booking.BookingID" value="@Model.booking.BookingID" type="hidden" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-10">
+                                        @if (Model.rooms.Count() > 5)
+                                        {
+                                            <span> <h1 class="text-success">@Model.rooms.Count() </h1> Rooms Available</span>
+                                        }
+                                        else
+                                        {
+                                            <span> <h1 class="text-danger">@Model.rooms.Count() </h1> Rooms Available</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <input value="@Model.booking.RoomType.Name" readonly class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <select asp-for="booking.RoomID" asp-items="@Model.rooms" class="form-control">
+                                            <option value="">Choose ...</option>
+                                        </select>
+                                        <span asp-validation-for="booking.RoomID" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <button type="submit" class="btn btn-primary right">Assign Room</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model Booking
+<div class="modal fade bd-example-modal-md" id="cancel-@Model.BookingID" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#example" data-ajax-complete="OnComplete" asp-area="management" asp-action="cancelbooking" asp-controller="booking">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you sure you want to cancel this booking?</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <input asp-for="BookingID" value="@Model.BookingID" type="hidden">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No Close</button>
+                    <button type="submit" class="btn btn-primary">Yes Proceed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

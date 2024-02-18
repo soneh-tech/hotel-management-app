@@ -1,0 +1,133 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model HomeViewModel
+<div class="content-body">
+    <div class="container-fluid">
+
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Modify Public Home Page</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form enctype="multipart/form-data" data-ajax="true" data-ajax-method="post" data-ajax-success="OnSuccess" data-ajax-failure="OnFailure" asp-action="edithome" asp-controller="cmsconfiguration" asp-area="management">
+                                <div class="form-row">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Slider Section Of Home</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <input type="hidden" asp-for="home.ID">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label asp-for="home.Title">Slider Title</label>
+                                                    <input asp-for="home.Title" class="form-control">
+                                                    <span asp-validation-for="home.Title" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label asp-for="home.Description">Slider Description</label>
+                                                    <textarea rows="4" asp-for="home.Description" class="form-control"></textarea>
+                                                    <span asp-validation-for="home.Description" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label asp-for="sliders">Image Sliders</label>
+                                                    <div class="fallback w-100">
+                                                        <input asp-for="sliders" multiple class="form-control dropify" />
+                                                    </div>
+                                                    <span class="text-danger">make sure you select a  1920 x 770 sized image</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">About Section Of Home</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label asp-for="home.AboutTitle">About Title</label>
+                                                    <input asp-for="home.AboutTitle" class="form-control">
+                                                    <span asp-validation-for="home.AboutTitle" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label asp-for="home.AboutDescription">About Description</label>
+                                                    <textarea rows="4" asp-for="home.AboutDescription" class="form-control"></textarea>
+                                                    <span asp-validation-for="home.AboutDescription" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label asp-for="aboutImages">About Images</label>
+                                                    <div class="fallback w-100">
+                                                        <input asp-for="aboutImages" multiple class="form-control dropify" />
+                                                    </div>
+                                                    <span class="text-danger">make sure you select a  275 x 390 sized image</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Services Section</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-row">
+                                                @if(Model.services != null)
+                                                {
+                                                    @for(var item = 0; item < Model.services.Count();item++)
+                                                    {
+                                                        <input type="hidden" asp-for="@Model.services.ToList()[item].ID">
+                                                        <div class="form-group col-md-6">
+                                                            <label asp-for="@Model.services.ToList()[item].Title">Service Offered</label>
+                                                            <input asp-for="@Model.services.ToList()[item].Title" class="form-control">
+                                                            <span asp-validation-for="@Model.services.ToList()[item].Title" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label asp-for="@Model.services.ToList()[item].Description">Service Description</label>
+                                                            <textarea rows="4" asp-for="@Model.services.ToList()[item].Description" class="form-control"></textarea>
+                                                            <span asp-validation-for="@Model.services.ToList()[item].Description" class="text-danger"></span>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+              function OnSuccess() {
+
+            swal({
+                title: "Good Job !!!",
+                text: "your record was saved successfully",
+                type: "success"
+            });
+        }
+        function OnFailure() {
+
+            swal({
+                title: "Oops... ",
+                text: "something went wrong. please try again",
+                type: "wrong"
+            });
+        }
+
+    </script>
+}

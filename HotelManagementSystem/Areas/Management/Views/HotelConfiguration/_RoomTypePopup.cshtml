@@ -1,0 +1,71 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model RoomTypeViewModel
+<div class="modal fade" id="roomtype_dialog-@Model.RoomTypeID" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Room Type Information</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <form enctype="multipart/form-data" data-ajax="true"
+                  data-ajax-success="OnSuccess" data-ajax-failure="OnFailure"
+                  method="post">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <input asp-for="@Model.RoomTypeID" class="form-control" type="hidden">
+                            <input asp-for="@Model.ExixtingPhoto" value="@ViewBag.imageURL" class="form-control" type="hidden">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="Name">Room Type</label>
+                            <input asp-for="Name" class="form-control" placeholder="name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Size">Size</label>
+                            <input asp-for="Size" class="form-control" placeholder="size">
+                            <span asp-validation-for="Size" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Capacity">Capacity</label>
+                            <input asp-for="Capacity" class="form-control" placeholder="capacity">
+                            <span asp-validation-for="Capacity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="Price">Price</label>
+                            <input asp-for="Price" class="form-control" placeholder="price">
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <img src="~/images/rooms/@ViewBag.imageURL" asp-append-version="true" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="Photo"></label>
+                            <div class="fallback w-100">
+                                <input multiple asp-for="Photo" class="form-control dropify" />
+                            </div>
+                            <span class="text-danger">make sure you select a 470 x 600, 370 x 240, 770 x 440 sized image in this order</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <partial name="_ModalFooterButtons" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model RoomViewModel
+@{ ViewBag.RoomTypes = Model.roomTypes;}
+
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Rooms</h4>
+                        <button class="btn btn-primary right" data-toggle="modal" data-target="#room_dialog-0">Add Room</button>
+                        @await Html.PartialAsync("_RoomPopup",new Room())
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-control">Retrieve All Rooms For</label>
+                            </div>
+                            <div class="col-md-4">
+                                <select asp-items="@Model.roomTypes" class="form-control" id="selected_room">
+                                    <option>Choose...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="content_div" class="table-responsive">
+                            <partial name="_RoomPartialView" model="Model" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#selected_room").on("change", function () {
+                $.ajax({
+                    type: "Get",
+                    url: "@Url.Action("GetRoomsForType")",
+                    data: { id: $(this).val() },
+                    success: function (result) { $("#content_div").html(result); },
+                    error: function (err) { alert("no success"); }
+                });
+            });
+        });
+
+        function OnSuccess(result) {
+            $(".close").click();
+            $("#content_div").html(result);
+            swal({
+                title: "Good Job !!!",
+                text: "your record was saved successfully",
+                type: "success"
+            });
+        }
+        function OnFailure() {
+            $(".close").click();
+            swal({
+                title: "Oops... ",
+                text: "something went wrong. please try again",
+                type: "wrong"
+            });
+        }
+    </script>
+}

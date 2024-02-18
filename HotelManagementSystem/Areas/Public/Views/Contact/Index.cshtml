@@ -1,0 +1,142 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model ContactViewModel;
+<!-- Header Section Begin -->
+<header class="header-section header-normal">
+    <div class="top-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="tn-left">
+                        <li><i class="fa fa-phone"></i> @Model.contact.Phone</li>
+                        <li><i class="fa fa-envelope"></i> @Model.contact.Email</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="tn-right">
+                        <div class="top-social">
+                            @foreach (var item in Model.socialMedias)
+                            {
+                                if (item.Title is "Facebook")
+                                {
+                                    <a href="@item.URL" target="_blank"><i class="fa fa-facebook"></i></a>
+                                }
+                                else if (item.Title is "Twitter")
+                                {
+                                    <a href="@item.URL" target="_blank"><i class="fa fa-twitter"></i></a>
+                                }
+                                else if (item.Title is "Instagram")
+                                {
+                                    <a href="@item.URL" target="_blank"><i class="fa fa-instagram"></i></a>
+                                }
+                            }
+                        </div>
+                        <a href="#" class="bk-btn">Reserve Now</a>
+                        <div class="language-option">
+                            @*      @if (signInManager.IsSignedIn(User))
+                            {
+                            <form method="post" asp-action="signout" asp-controller="account" asp-area="management">
+                            Login:  @User.Identity.Name
+                            </form>
+                            }
+                            else
+                            {
+                            <span>Account <i class="fa fa-angle-down"></i></span>
+                            <div class="flag-dropdown">
+                            <ul>
+                            <li><a asp-action="login" asp-controller="account" asp-area="management">Login</a></li>
+                            <li><a asp-action="register" asp-controller="account" asp-area="management">Register</a></li>
+                            </ul>
+                            </div>
+                            }
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="logo">
+                        <a asp-action="index" asp-controller="home">
+                            <img src="~/images/logo.png" asp-append-version="true" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="nav-menu">
+                        <nav class="mainmenu">
+                            <ul>
+                                <li><a asp-action="index" asp-controller="home">Home</a></li>
+                                <li><a asp-action="index" asp-controller="rooms">Rooms</a></li>
+                                <li><a asp-action="index" asp-controller="about">About Us</a></li>
+                                <li><a asp-action="index" asp-controller="news">News</a></li>
+                                <li class="active"><a asp-action="index" asp-controller="contact">Contact</a></li>
+                            </ul>
+                        </nav>
+                        <div class="nav-right search-switch">
+                            <i class="icon_search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->
+<!-- Contact Section Begin -->
+<section class="contact-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="contact-text">
+                    <h2>Contact Info</h2>
+                    <p>
+                       @Model.contact.ShortDescription
+                    </p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="c-o">Address:</td>
+                                <td>@Model.contact.Address</td>
+                            </tr>
+                            <tr>
+                                <td class="c-o">Phone:</td>
+                                <td>@Model.contact.Phone</td>
+                            </tr>
+                            <tr>
+                                <td class="c-o">Email:</td>
+                                <td>@Model.contact.Email</td>
+                            </tr>
+                          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-7 offset-lg-1">
+                <form class="contact-form">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Your Name">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Your Email">
+                        </div>
+                        <div class="col-lg-12">
+                            <textarea placeholder="Your Message"></textarea>
+                            <button type="submit">Submit Now</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.5280148104894!2d7.44549527488508!3d9.106687690957818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0bc9b021f20d%3A0x60b34fb61b91d186!2sWallgate%20Apartments!5e0!3m2!1sen!2sng!4v1684860816276!5m2!1sen!2sng"
+            height="470" style="border:0;" loading="lazy" allowfullscreen=""></iframe>
+        
+        </div>
+    </div>
+</section>
+<!-- Contact Section End -->

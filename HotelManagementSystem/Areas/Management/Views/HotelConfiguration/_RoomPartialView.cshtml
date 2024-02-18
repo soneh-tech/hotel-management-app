@@ -1,0 +1,49 @@
+﻿@model RoomViewModel
+@{
+    ViewBag.RoomTypes = Model.roomTypes;
+}
+<table class="table table-bordered verticle-middle table-responsive-sm">
+    <thead>
+        <tr>
+            <th scope="col">S/No</th>
+            <th scope="col">Room Number</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+
+            var item = Model.rooms.ToList();
+            for (int i = 0; i < item.Count; i++)
+            {
+                var s_no = i + 1;
+                <tr>
+                    <td>@s_no</td>
+                    <td>@item[i].RoomNumber</td>
+
+                    <td>
+                        <span>
+                            <a class="mr-4" data-toggle="modal" data-target="@("#room_dialog-" + @item[i].RoomID)" data-url="@Url.Action($"GetRoom/{item[i].RoomID}")"
+                               data-placement="top" title="Edit">
+                                <i class="fa fa-pencil color-muted"></i>
+                            </a>
+                            @await Html.PartialAsync("_RoomPopup",item[i])
+
+                            <a data-toggle="modal" data-target="@("#delete-" + @item[i].RoomID)" data-url="@Url.Action($"GetRoom/{item[i].RoomID}")"
+                               data-placement="top" title="Close">
+                                <i class="fa fa-close color-danger"></i>
+                            </a>
+                            @await Html.PartialAsync("_DeleteRoomPopup",item[i])
+
+                        </span>
+                    </td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+

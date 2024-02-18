@@ -1,0 +1,312 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="Areas\Management\Models\**" />
+    <Compile Remove="Views\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap-colorpicker\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap-material-datetimepicker\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap-multiselect\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap-select\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap-tagsinput\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap-touchspin\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap-v4-rtl\**" />
+    <Compile Remove="wwwroot\vendor\bootstrap\**" />
+    <Compile Remove="wwwroot\vendor\c3\**" />
+    <Compile Remove="wwwroot\vendor\clockpicker\**" />
+    <Compile Remove="wwwroot\vendor\cropperjs\**" />
+    <Compile Remove="wwwroot\vendor\datatables.net-bs4\**" />
+    <Compile Remove="wwwroot\vendor\dropify\**" />
+    <Compile Remove="wwwroot\vendor\footable\**" />
+    <Compile Remove="wwwroot\vendor\fullcalendar\**" />
+    <Compile Remove="wwwroot\vendor\gaugeJS\**" />
+    <Compile Remove="wwwroot\vendor\highlightjs\**" />
+    <Compile Remove="wwwroot\vendor\horizontal-timeline\**" />
+    <Compile Remove="wwwroot\vendor\innoto-switchery\**" />
+    <Compile Remove="wwwroot\vendor\jasny-bootstrap\**" />
+    <Compile Remove="wwwroot\vendor\jquery-asColorPicker\**" />
+    <Compile Remove="wwwroot\vendor\jquery-bootgrid\**" />
+    <Compile Remove="wwwroot\vendor\jquery-cropper\**" />
+    <Compile Remove="wwwroot\vendor\jquery-steps\**" />
+    <Compile Remove="wwwroot\vendor\jqueryui\**" />
+    <Compile Remove="wwwroot\vendor\jqvmap\**" />
+    <Compile Remove="wwwroot\vendor\jsgrid\**" />
+    <Compile Remove="wwwroot\vendor\nestable2\**" />
+    <Compile Remove="wwwroot\vendor\owl-carousel\**" />
+    <Compile Remove="wwwroot\vendor\owl.carousel\**" />
+    <Compile Remove="wwwroot\vendor\pg-calendar\**" />
+    <Compile Remove="wwwroot\vendor\quill\**" />
+    <Compile Remove="wwwroot\vendor\rickshaw\**" />
+    <Compile Remove="wwwroot\vendor\timepicki\**" />
+    <Compile Remove="wwwroot\vendor\typeahead.js\**" />
+    <Compile Remove="wwwroot\vendor\x-editable\**" />
+    <Content Remove="Controllers\**" />
+    <Content Remove="Areas\Management\Models\**" />
+    <Content Remove="Views\**" />
+    <Content Remove="wwwroot\vendor\bootstrap-colorpicker\**" />
+    <Content Remove="wwwroot\vendor\bootstrap-material-datetimepicker\**" />
+    <Content Remove="wwwroot\vendor\bootstrap-multiselect\**" />
+    <Content Remove="wwwroot\vendor\bootstrap-select\**" />
+    <Content Remove="wwwroot\vendor\bootstrap-tagsinput\**" />
+    <Content Remove="wwwroot\vendor\bootstrap-touchspin\**" />
+    <Content Remove="wwwroot\vendor\bootstrap-v4-rtl\**" />
+    <Content Remove="wwwroot\vendor\bootstrap\**" />
+    <Content Remove="wwwroot\vendor\c3\**" />
+    <Content Remove="wwwroot\vendor\clockpicker\**" />
+    <Content Remove="wwwroot\vendor\cropperjs\**" />
+    <Content Remove="wwwroot\vendor\datatables.net-bs4\**" />
+    <Content Remove="wwwroot\vendor\dropify\**" />
+    <Content Remove="wwwroot\vendor\footable\**" />
+    <Content Remove="wwwroot\vendor\fullcalendar\**" />
+    <Content Remove="wwwroot\vendor\gaugeJS\**" />
+    <Content Remove="wwwroot\vendor\highlightjs\**" />
+    <Content Remove="wwwroot\vendor\horizontal-timeline\**" />
+    <Content Remove="wwwroot\vendor\innoto-switchery\**" />
+    <Content Remove="wwwroot\vendor\jasny-bootstrap\**" />
+    <Content Remove="wwwroot\vendor\jquery-asColorPicker\**" />
+    <Content Remove="wwwroot\vendor\jquery-bootgrid\**" />
+    <Content Remove="wwwroot\vendor\jquery-cropper\**" />
+    <Content Remove="wwwroot\vendor\jquery-steps\**" />
+    <Content Remove="wwwroot\vendor\jqueryui\**" />
+    <Content Remove="wwwroot\vendor\jqvmap\**" />
+    <Content Remove="wwwroot\vendor\jsgrid\**" />
+    <Content Remove="wwwroot\vendor\nestable2\**" />
+    <Content Remove="wwwroot\vendor\owl-carousel\**" />
+    <Content Remove="wwwroot\vendor\owl.carousel\**" />
+    <Content Remove="wwwroot\vendor\pg-calendar\**" />
+    <Content Remove="wwwroot\vendor\quill\**" />
+    <Content Remove="wwwroot\vendor\rickshaw\**" />
+    <Content Remove="wwwroot\vendor\timepicki\**" />
+    <Content Remove="wwwroot\vendor\typeahead.js\**" />
+    <Content Remove="wwwroot\vendor\x-editable\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="Areas\Management\Models\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap-colorpicker\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap-material-datetimepicker\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap-multiselect\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap-select\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap-tagsinput\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap-touchspin\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap-v4-rtl\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\c3\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\clockpicker\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\cropperjs\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\datatables.net-bs4\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\dropify\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\footable\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\fullcalendar\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\gaugeJS\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\highlightjs\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\horizontal-timeline\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\innoto-switchery\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jasny-bootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jquery-asColorPicker\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jquery-bootgrid\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jquery-cropper\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jquery-steps\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jqueryui\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jqvmap\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jsgrid\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\nestable2\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\owl-carousel\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\owl.carousel\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\pg-calendar\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\quill\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\rickshaw\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\timepicki\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\typeahead.js\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\x-editable\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="Areas\Management\Models\**" />
+    <None Remove="Views\**" />
+    <None Remove="wwwroot\vendor\bootstrap-colorpicker\**" />
+    <None Remove="wwwroot\vendor\bootstrap-material-datetimepicker\**" />
+    <None Remove="wwwroot\vendor\bootstrap-multiselect\**" />
+    <None Remove="wwwroot\vendor\bootstrap-select\**" />
+    <None Remove="wwwroot\vendor\bootstrap-tagsinput\**" />
+    <None Remove="wwwroot\vendor\bootstrap-touchspin\**" />
+    <None Remove="wwwroot\vendor\bootstrap-v4-rtl\**" />
+    <None Remove="wwwroot\vendor\bootstrap\**" />
+    <None Remove="wwwroot\vendor\c3\**" />
+    <None Remove="wwwroot\vendor\clockpicker\**" />
+    <None Remove="wwwroot\vendor\cropperjs\**" />
+    <None Remove="wwwroot\vendor\datatables.net-bs4\**" />
+    <None Remove="wwwroot\vendor\dropify\**" />
+    <None Remove="wwwroot\vendor\footable\**" />
+    <None Remove="wwwroot\vendor\fullcalendar\**" />
+    <None Remove="wwwroot\vendor\gaugeJS\**" />
+    <None Remove="wwwroot\vendor\highlightjs\**" />
+    <None Remove="wwwroot\vendor\horizontal-timeline\**" />
+    <None Remove="wwwroot\vendor\innoto-switchery\**" />
+    <None Remove="wwwroot\vendor\jasny-bootstrap\**" />
+    <None Remove="wwwroot\vendor\jquery-asColorPicker\**" />
+    <None Remove="wwwroot\vendor\jquery-bootgrid\**" />
+    <None Remove="wwwroot\vendor\jquery-cropper\**" />
+    <None Remove="wwwroot\vendor\jquery-steps\**" />
+    <None Remove="wwwroot\vendor\jqueryui\**" />
+    <None Remove="wwwroot\vendor\jqvmap\**" />
+    <None Remove="wwwroot\vendor\jsgrid\**" />
+    <None Remove="wwwroot\vendor\nestable2\**" />
+    <None Remove="wwwroot\vendor\owl-carousel\**" />
+    <None Remove="wwwroot\vendor\owl.carousel\**" />
+    <None Remove="wwwroot\vendor\pg-calendar\**" />
+    <None Remove="wwwroot\vendor\quill\**" />
+    <None Remove="wwwroot\vendor\rickshaw\**" />
+    <None Remove="wwwroot\vendor\timepicki\**" />
+    <None Remove="wwwroot\vendor\typeahead.js\**" />
+    <None Remove="wwwroot\vendor\x-editable\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Management\Views\CMSConfiguration\AboutMain.cshtml~RF84a1607.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Areas\Management\Models\Ammenity.cs" />
+    <Compile Include="Areas\Management\Models\AppUser.cs" />
+    <Compile Include="Areas\Management\Models\Booking.cs" />
+    <Compile Include="Areas\Management\Models\Customer.cs" />
+    <Compile Include="Areas\Management\Models\Product.cs" />
+    <Compile Include="Areas\Management\Models\ProductCategory.cs" />
+    <Compile Include="Areas\Management\Models\Payment.cs" />
+    <Compile Include="Areas\Management\Models\Review.cs" />
+    <Compile Include="Areas\Management\Models\Room.cs" />
+    <Compile Include="Areas\Management\Models\RoomImage.cs" />
+    <Compile Include="Areas\Management\Models\RoomType.cs" />
+    <Compile Include="Areas\Management\Models\Sale.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\style.css.map" />
+    <None Include="wwwroot\fonts\ElegantIcons.svg" />
+    <None Include="wwwroot\fonts\Flaticon.svg" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\icons\avasta\fonts\avasta.svg" />
+    <None Include="wwwroot\icons\avasta\fonts\avasta.woff2" />
+    <None Include="wwwroot\icons\font-awesome-old\fonts\fontawesome-webfont3e6e.svg" />
+    <None Include="wwwroot\icons\font-awesome-old\fonts\fontawesome-webfont3e6e.woff2" />
+    <None Include="wwwroot\icons\helveticaNeue\fonts\HelveticaNeue.svg" />
+    <None Include="wwwroot\icons\helveticaNeue\fonts\HelveticaNeue.woff2" />
+    <None Include="wwwroot\icons\helveticaNeue\fonts\HelveticaNeueMed.svg" />
+    <None Include="wwwroot\icons\helveticaNeue\fonts\HelveticaNeueMed.woff2" />
+    <None Include="wwwroot\icons\line-awesome\fonts\line-awesome.svg" />
+    <None Include="wwwroot\icons\line-awesome\fonts\line-awesome.woff2" />
+    <None Include="wwwroot\icons\material-design-iconic-font\fonts\materialdesignicons-webfont.svg" />
+    <None Include="wwwroot\icons\material-design-iconic-font\fonts\materialdesignicons-webfont.woff2" />
+    <None Include="wwwroot\icons\simple-line-icons\fonts\Simple-Line-Icons4c82.svg" />
+    <None Include="wwwroot\icons\simple-line-icons\fonts\Simple-Line-Icons4c82.woff2" />
+    <None Include="wwwroot\icons\themify-icons\fonts\themify9f24.svg" />
+    <None Include="wwwroot\js\bootstrap.min.js" />
+    <None Include="wwwroot\js\custom.min.js" />
+    <None Include="wwwroot\js\dashboard\dashboard-1.js" />
+    <None Include="wwwroot\js\jquery-3.3.1.min.js" />
+    <None Include="wwwroot\js\jquery-ui.min.js" />
+    <None Include="wwwroot\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\js\jquery.nice-select.min.js" />
+    <None Include="wwwroot\js\jquery.slicknav.js" />
+    <None Include="wwwroot\js\main.js" />
+    <None Include="wwwroot\js\owl.carousel.min.js" />
+    <None Include="wwwroot\js\plugins-init\pickadate-init.js" />
+    <None Include="wwwroot\js\quixnav-init.js" />
+    <None Include="wwwroot\vendor\bootstrap-daterangepicker\daterangepicker.js" />
+    <None Include="wwwroot\vendor\datatables\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\vendor\global\global.min.js" />
+    <None Include="wwwroot\vendor\moment\moment.min.js" />
+    <None Include="wwwroot\vendor\morris\morris.min.js" />
+    <None Include="wwwroot\vendor\pickadate\picker.date.js" />
+    <None Include="wwwroot\vendor\pickadate\picker.js" />
+    <None Include="wwwroot\vendor\pickadate\picker.time.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ar.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\bg_BG.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\bs_BA.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ca_ES.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\cs_CZ.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\da_DK.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\de_DE.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\el_GR.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\es_ES.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\et_EE.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\eu_ES.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\fa_IR.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\fi_FI.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\fr_FR.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ge_GEO.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\gl_ES.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\he_IL.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\hi_IN.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\hr_HR.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\hu_HU.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\id_ID.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\is_IS.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\it_IT.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ja_JP.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\km_KH.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ko_KR.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\lt_LT.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\lv_LV.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\nb_NO.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ne_NP.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\nl_NL.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\no_NO.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\pl_PL.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\pt_BR.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\pt_PT.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ro_RO.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\ru_RU.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\sk_SK.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\sl_SI.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\sr_RS_cy.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\sr_RS_lt.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\sv_SE.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\th_TH.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\tr_TR.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\uk_UA.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\vi_VN.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\zh_CN.js" />
+    <None Include="wwwroot\vendor\pickadate\translations\zh_TW.js" />
+    <None Include="wwwroot\vendor\quixnav\quixnav.css.map" />
+    <None Include="wwwroot\vendor\quixnav\quixnav.min.js" />
+    <None Include="wwwroot\vendor\raphael\raphael.min.js" />
+    <None Include="wwwroot\vendor\select2\js\select2.full.min.js" />
+    <None Include="wwwroot\vendor\sweetalert2\dist\sweetalert2.min.js" />
+    <None Include="wwwroot\vendor\toastr\js\toastr.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
+    <PackageReference Include="Paystack.Net" Version="1.1.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\images\abouts\" />
+    <Folder Include="wwwroot\images\gallery\" />
+    <Folder Include="wwwroot\images\profile\" />
+    <Folder Include="wwwroot\images\products\" />
+    <Folder Include="wwwroot\images\news\" />
+    <Folder Include="wwwroot\images\rooms\" />
+    <Folder Include="wwwroot\images\sliders\" />
+  </ItemGroup>
+
+</Project>

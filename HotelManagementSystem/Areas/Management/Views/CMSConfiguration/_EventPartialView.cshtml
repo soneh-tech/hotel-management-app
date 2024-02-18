@@ -1,0 +1,25 @@
+﻿@model EventsViewModel
+@for (var item = 0; item < Model.events.Count(); item++)
+{
+
+    <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="card mb-3">
+            <img class="card-img-top img-fluid" alt="No Image Selected" src="~/images/news/@Model.events.ToList()[item].ImageURL" alt="" asp-append-version="true">
+            <div class="card-header">
+                <h5 class="card-title">@Model.events.ToList()[item].Title</h5>
+            </div>
+            <div class="card-body">
+            </div>
+            <div class="card-footer">
+                @{
+                    var model = new EventsViewModel { my_event = @Model.events.ToList()[item] };
+                }
+                <button type="button" class="card-text d-inline btn btn-danger" data-toggle="modal" data-target="@("#delete-" + @Model.events.ToList()[item].ID)" data-url="@Url.Action($"GetEvent/{Model.events.ToList()[item].ID}")">Remove</button>
+                @await Html.PartialAsync("_DeleteEventPopup",model)
+
+                <button type="button" class="btn btn-success text-white float-right" data-toggle="modal" data-target="@("#event_modal-" + @Model.events.ToList()[item].ID)" data-url="@Url.Action($"GetEvent/{Model.events.ToList()[item].ID}")">Modify</button>
+                @await Html.PartialAsync("_EventPopup",model)
+            </div>
+        </div>
+    </div>
+}

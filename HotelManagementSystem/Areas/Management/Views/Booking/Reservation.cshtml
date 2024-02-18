@@ -1,0 +1,76 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model BookingViewModel
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Make Reservation</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form method="post" asp-area="management" asp-action="reserveroom" asp-controller="booking">
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <select asp-for="booking.CustomerID" asp-items="@Model.customers" id="single-select" class="form-control">
+                                            <option value="" >Exixting Guest...</option>
+                                        </select>
+                                        <span asp-validation-for="booking.CustomerID" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <button type="button" class="btn btn-primary right" data-toggle="modal" data-target=".bd-example-modal-lg">New Guest</button>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                       <div class="form-group col-md-6">
+                                        <label asp-for="booking.CheckIn">Check In</label>
+                                        <input asp-for="booking.CheckIn" class="datepicker-default form-control" id="datepicker" placeholder="DD/MM/YY">
+                                        <span asp-validation-for="booking.CheckIn" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="booking.CheckOut">Check Out</label>
+                                        <input asp-for="booking.CheckOut" class="datepicker-default form-control" id="datepicker" placeholder="DD/MM/YY">
+                                        <span asp-validation-for="booking.CheckOut" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="booking.Adult">Number of Adults</label>
+                                        <input asp-for="booking.Adult" class="form-control" placeholder="Occupants">
+                                        <span asp-validation-for="booking.Adult" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Number of Kids</label>
+                                        <input type="text" class="form-control" placeholder="occupants">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="booking.RoomTypeID">Room Type</label>
+                                        <select asp-for="booking.RoomTypeID" asp-items="@Model.roomTypes" class="form-control">
+                                            <option value="">Choose...</option>
+                                        </select>
+                                        <span asp-validation-for="booking.RoomTypeID" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Reserve</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("_NewUserPopup");
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function OnComplete() {
+            $(".modal").hide();
+            $(".fade").hide();
+        }
+
+    </script>
+}

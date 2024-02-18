@@ -1,0 +1,85 @@
+﻿@model IEnumerable<RoomType>
+@foreach (var room in Model)
+{
+
+    <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+        <div class="card mb-3">
+            @if (room.Images != null)
+            {
+                for (int i = 0; i < room.Images.Count(); i++)
+                {
+                    if (i is 0)
+                    {
+                        <img class="card-img-top img-fluid" alt="No Image Selected" src="~/images/rooms/@room.Images.ToList()[i].ImageURL" alt="" asp-append-version="true">
+                        ViewBag.imageURL = @room.Images.ToList()[i].ImageURL;
+                        break;
+                    }
+                }
+            }
+
+            <div class="card-header">
+                <h5 class="card-title">@room.Name</h5>
+            </div>
+            <div class="card-body">
+                <h3># @room.Price<span>/Pernight</span></h3>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Size:</td>
+                            <td>@room.Size ft</td>
+                        </tr>
+                        <tr>
+                            <td>Capacity:</td>
+                            <td>@room.Capacity Person(s) Max</td>
+                        </tr>
+                        <tr>
+                            <td>Bed:</td>
+                            <td>Standard Beds</td>
+                        </tr>
+                        <tr>
+                            <td>Rooms:</td>
+                            <td>
+                                @if (room.Rooms != null)
+                                {
+                                    @room.Rooms.ToList().Count();
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Services:</td>
+
+                            @if (room.Ammenities != null)
+                            {
+                                foreach (var ammenity in room.Ammenities)
+                                {
+                                    <td>
+                                        @ammenity.Name ,
+                                    </td>
+                                }
+                            }
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                @{
+                    var model = new RoomTypeViewModel
+                {
+                    RoomTypeID = room.RoomTypeID,
+                    Name = room.Name,
+                    Capacity = room.Capacity,
+                    Size = room.Size,
+                    Price = room.Price
+                };
+                }
+                <button type="button" class="card-text d-inline btn btn-danger" data-toggle="modal" data-target="@("#delete-" + @room.RoomTypeID)" data-url="@Url.Action($"GeRoomType/{room.RoomTypeID}")">Delete</button>
+                @await Html.PartialAsync("_DeleteRoomTypePopup",model)
+
+
+                <button type="button" class="btn btn-success text-white float-right" data-toggle="modal" data-target="@("#roomtype_dialog-" + @room.RoomTypeID)" data-url="@Url.Action($"GeRoomType/{room.RoomTypeID}")">Modify</button>
+                @await Html.PartialAsync("_RoomTypePopup",model)
+            </div>
+        </div>
+    </div>
+}

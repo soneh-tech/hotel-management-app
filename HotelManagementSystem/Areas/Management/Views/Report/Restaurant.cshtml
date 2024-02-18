@@ -1,0 +1,124 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model RestaurantReportViewModel
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Bar &amp; Restaurant Sales</h4>
+                        <h2 class="card-title right">
+                            Revenue Generated
+                            <span class="text-success" id="totalPaidAmount">₦@Model.Sales.Sum(x => x.Quantity * x.CostPrice)</span>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="example">
+                                    <p class="mb-1">From</p>
+                                    <input class="form-control text-center input-daterange-datepicker" name="daterange" placeholder="01/01/2023 - 01/01/2033" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div id="content_div" class="table-responsive">
+                            <table id="example">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">S/No</th>
+                                        <th scope="col">Client</th>
+                                        <th scope="col">Purchased</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Paid(₦)</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var row in Model.Sales)
+                                    {
+                                        <tr>
+                                            <td scope="col">@row.SaleID</td>
+                                            <td scope="col">@row.Customer.Name</td>
+                                            <td scope="col">@row.Product.ProductName</td>
+                                            <td scope="col">@row.Quantity</td>
+                                            <td scope="col">@row.Quantity * @row.CostPrice</td>
+                                            <td scope="col">@row.SaleDate</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function (start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
+
+        $(document).ready(function () {
+
+
+            $(".input-daterange-datepicker").on("change", function () {
+                var dateRange = $(this).val();
+                var dates = dateRange.split("-");
+                var startDate = $.trim(dates[0]);
+                var endDate = $.trim(dates[1]);
+
+                $.ajax({
+                    type: "get",
+                    url: "@Url.Action("GetRestaurantReport")",
+                    data: { from: startDate, to: endDate },
+                    success: function (data) {
+                        updateTable(data);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                    }
+                });
+            });
+
+        });
+
+
+        function updateTable(data) {
+            var table = $("#example").DataTable();
+            table.clear();
+            var totalPaidAmount = 0;
+            $.each(data, function (index, item) {
+                table.row.add([
+                    index + 1,
+                    item.guest.name,
+                    item.checkIn,
+                    item.checkOut,
+                    item.roomType.name,
+                    item.payment.paidAmount
+                ]).draw();
+                totalPaidAmount += parseFloat(item.payment.paidAmount);
+            });
+
+            var formattedTotalPaidAmount = totalPaidAmount.toLocaleString(undefined, {
+                style: 'currency',
+                currency: 'NGN'
+            });
+            $("#totalPaidAmount").text(formattedTotalPaidAmount);
+        }
+
+
+
+    </script>
+}

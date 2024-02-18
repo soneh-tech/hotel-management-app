@@ -1,0 +1,50 @@
+﻿<div class="modal fade" id="sale_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Item Information</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Category</label>
+                        <select id="drp_categories" class="form-control">
+                            <option value="">Choose...</option>
+                            <option value="1">Food Item</option>
+                            <option value="2">Drinks</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Products</label>
+                        <select id="single-select" class="form-control">
+                            <option value="">Choose...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Price</label>
+                        <input disabled id="txtPrice" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Quantity</label>
+                        <input class="form-control" id="txtQuantity" placeholder="0">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Total</label>
+                        <input disabled id="txtTotal" placeholder="0.00">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="btn_add_item" class="btn btn-primary">Add Item</button>
+            </div>
+        </div>
+    </div>
+</div>

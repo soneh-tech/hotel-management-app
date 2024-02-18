@@ -1,0 +1,36 @@
+﻿@model AdminRegisterViewModel
+<div class="auth-form">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h4 class="text-center mb-4">Sign up your account</h4>
+    <form method="post" asp-action="register" asp-controller="account" asp-area="management">
+        <div class="form-group">
+            <label asp-for="FirstName"><strong>First Name</strong></label>
+            <input asp-for="FirstName"  class="form-control" placeholder="your first name">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>  <div class="form-group">
+            <label asp-for="LastName"><strong>Last Name</strong></label>
+            <input asp-for="LastName" class="form-control" placeholder="your last name">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"><strong>Email Address</strong></label>
+            <input asp-for="Email" class="form-control" placeholder="hello@example.com">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"><strong>Password</strong></label>
+            <input asp-for="Password" class="form-control">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div><div class="form-group">
+            <label asp-for="ConfirmPassword" ><strong>Confirm Password</strong></label>
+            <input asp-for="ConfirmPassword" class="form-control">
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-block">Sign me up</button>
+        </div>
+    </form>
+    <div class="new-account mt-3">
+        <p>Already have an account? <a class="text-primary" asp-area="management" asp-action="index" asp-controller="account">Sign in</a></p>
+    </div>
+</div>

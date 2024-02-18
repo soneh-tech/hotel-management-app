@@ -1,0 +1,53 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model AboutViewModel
+<div class="content-body">
+    <div class="container-fluid">
+        <form enctype="multipart/form-data" method="post" asp-action="editaboutservices" asp-controller="cmsconfiguration" asp-area="management">
+            <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Modify Services Of About Page</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @for (var item = 0; item < Model.services.Count(); item++)
+                            {
+
+                                <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+                                    <div class="card mb-3">
+                                        <img class="card-img-top img-fluid" alt="No Image Selected" src="~/images/abouts/@Model.services.ToList()[item].ImageURL" alt="" asp-append-version="true">
+                                        <div class="card-header">
+                                                <h5 class="card-title">@Model.services.ToList()[item].Title</h5>
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                        <div class="card-footer">
+                                                @{
+                                                    var model = new AboutViewModel { service = @Model.services.ToList()[item] };
+                                                }
+                                                <button type="button" class="btn btn-success text-white float-right" data-toggle="modal" data-target="@("#modify-" + @Model.services.ToList()[item].ID)" data-url="@Url.Action($"GetService/{Model.services.ToList()[item].ID}")">Modify</button>
+                                            @await Html.PartialAsync("_ModifyServicePopup",model)
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function OnComplete() {
+            $(".modal").hide();
+            $(".fade").hide();
+        }
+
+    </script>
+}

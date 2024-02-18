@@ -1,0 +1,50 @@
+﻿inject SignInManager<AppUser>
+    signInManager;
+    @model List<UserRoleViewModel>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Roles</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered verticle-middle table-responsive-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>S/No</th>
+                                            <th>Designation</th>
+                                            <th>Employees</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (Model.Any())
+                                            {
+                                                var item = Model.ToList();
+                                                for (int i = 0; i < item.Count; i++)
+                                                {
+                                                    var s_no = i + 1;
+                                                    <tr>
+                                                        <td>@s_no</td>
+                                                        <td>@item[i].RoleName</td>
+                                                        <td>@item[i].users.ToList().Count()</td>
+                                                        <td align="center">
+                                                            <a class="btn btn-success btn-rounded text-white" asp-route-id="@item[i].RoleID" asp-area="management" asp-controller="administration" asp-action="modifyusersinrole">Add Or Remove Users</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

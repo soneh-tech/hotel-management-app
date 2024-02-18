@@ -1,0 +1,48 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model Booking
+
+@{
+    var amount_to_pay = Model.RoomType.Price * ViewBag.days;
+}
+
+<div class="modal fade bd-example-modal-md" id="extend-@Model.BookingID" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#example" data-ajax-complete="OnComplete" asp-area="management" asp-action="extendbooking" asp-controller="booking">
+                <div class="modal-header">
+                    <h5 class="modal-title">Extend Reservation</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label >Current Check Out Date</label>
+                            <input value="CheckOut" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="CheckOut">Extend To</label>
+                            <input asp-for="CheckOut" class="datepicker-default form-control" id="datepicker" placeholder="DD/MM/YY">
+                            <span asp-validation-for="CheckOut" class="text-danger"></span>
+                        </div>
+                      @*  <div class="form-group col-md-12">
+                            <label asp-for="Payment.PaidAmount">Amount To Pay</label>
+                            <input asp-for="Payment.PaidAmount" value="@amount_to_pay" class="form-control" readonly>
+                            <span asp-validation-for="Payment.PaidAmount" class="text-danger"></span>
+                        </div>*@
+                        <div class="form-group col-md-12">
+                            <input asp-for="BookingID" value="@Model.BookingID" type="hidden">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

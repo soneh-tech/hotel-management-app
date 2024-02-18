@@ -1,0 +1,48 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model EventsViewModel
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">News & Events</h4>
+                        @{
+                            var add_model = new EventsViewModel { my_event = new Event { ID = 0 } };
+                        }
+                        <button class="btn btn-primary right" data-toggle="modal" data-target="#event_modal-@add_model.my_event.ID">Add An Event</button>
+                        @await Html.PartialAsync("_EventPopup",add_model)
+                    </div>
+                    <div class="card-body">
+                        <div id="event_content" class="row">
+                            <partial name="_EventPartialView" model="Model" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+        function OnSuccess() {
+            $(".close").hide();
+            $(".fade").hide();
+            swal({
+                title: "Good Job !!!",
+                text: "your record was saved successfully",
+                type: "success"
+            });
+        }
+        function OnFailure() {
+            $(".close").hide();
+            $(".fade").hide();
+            swal({
+                title: "Oops... ",
+                text: "something went wrong. please try again",
+                type: "wrong"
+            });
+        }
+    </script>
+}

@@ -1,0 +1,59 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model IEnumerable<Booking>
+<div class="content-body">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Recent Bookings</h4>
+                        <a asp-area="management" asp-action="reservation" asp-controller="booking" class="btn btn-primary right">Book Now</a>
+                    </div>
+                    <div class="card-body">
+                        <div  class="table-responsive">
+                            <table id="example" class="display" style="min-width: 845px">
+                                <partial name="_IndexPartialView" model="Model" />
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+     
+        $(document).ready(function () {
+
+          
+
+            var amount = $('#txt_amount').val();
+            $('#txt_amount').val(formatCurrency(amount));
+
+            $('#txt_discount').on('change keyup paste', function () {
+                var discount = $(this).val();
+
+                $('#txt_amount').val(formatCurrency(amount - discount));
+            });
+        });
+
+        function formatCurrency(input) {
+            var str = input.toString();
+            var parts = str.split('.');
+            var whole = parts[0];
+            var decimal = parts.length > 1 ? '.' + parts[1] : '';
+            whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return whole + decimal;
+        }
+
+        function OnComplete() {
+            $(".modal").hide();
+            $(".fade").hide();
+        }
+
+    </script>
+}

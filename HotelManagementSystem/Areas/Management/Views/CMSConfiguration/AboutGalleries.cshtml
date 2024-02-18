@@ -1,0 +1,55 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model AboutViewModel
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Modify Gallery Of About Page</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @for (var item = 0; item < Model.galleries.Count(); item++)
+                            {
+
+                                <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+                                    <div class="card mb-3">
+                                        <img class="card-img-top img-fluid" alt="No Image Selected" src="~/images/gallery/@Model.galleries.ToList()[item].ImageURL" alt="" asp-append-version="true">
+                                        <div class="card-header">
+                                            <h5 class="card-title">@Model.galleries.ToList()[item].Title</h5>
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                        <div class="card-footer">
+                                            @{
+                                                var model = new AboutViewModel { gallery = @Model.galleries.ToList()[item] };
+                                                }
+                                            <button type="button" class="card-text d-inline btn btn-danger" data-toggle="modal" data-target="@("#delete-" + @Model.galleries.ToList()[item].ID)" data-url="@Url.Action($"GetGallery/{Model.galleries.ToList()[item].ID}")">Remove</button>
+                                            @await Html.PartialAsync("_DeleteGalleryPopup",model)
+
+
+                                            <button type="button" class="btn btn-success text-white float-right" data-toggle="modal" data-target="@("#modify-" + @Model.galleries.ToList()[item].ID)" data-url="@Url.Action($"GetGallery/{Model.galleries.ToList()[item].ID}")">Modify</button>
+                                            @await Html.PartialAsync("_ModifyGalleryPopup",model)
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function OnComplete() {
+            $(".modal").hide();
+            $(".fade").hide();
+        }
+
+    </script>
+}

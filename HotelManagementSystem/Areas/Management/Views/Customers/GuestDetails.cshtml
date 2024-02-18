@@ -1,0 +1,90 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model CustomerViewModel
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="modal-title">Customer Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Full Names</label>
+                                <label class="form-control">@Model.Customer.Name</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Email</label>
+                                <label class="form-control">@Model.Customer.Email</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Phone</label>
+                                <label class="form-control">@Model.Customer.Phone</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Address</label>
+                                <label class="form-control">@Model.Customer.Address</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <a asp-action="index" asp-controller="customers" asp-area="management"  class="btn btn-primary"> Back to list</a>
+                                <button type="button" data-toggle="modal" data-target="@($"#bd-example-modal-lg-{Model.Customer.CustomerID}")" data-url="@Url.Action($"GuestPopupDetails/{Model.Customer.CustomerID}")" class="btn btn-primary pull-right">Modify</button>
+                                @await Html.PartialAsync("_ModifyGuestPopup",Model.Customer)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Booking History</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display" style="min-width: 845px">
+                                <thead>
+                                    <tr>
+                                        <th>S/No</th>
+                                        <th>Book Date</th>
+                                        <th>Checked In</th>
+                                        <th>Checked Out</th>
+                                        <th>Suite Occupied</th>
+                                        <th>Reference</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        var item = Model.Bookings.ToList();
+                                    }
+                                    @for (int i = 0; i < item.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item[i].BookDate</td>
+                                            <td>@item[i].CheckIn</td>
+                                            <td>@item[i].CheckOut</td>
+                                            <td>@item[i].RoomType.Name</td>
+                                            <td>@item[i].Reference</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model IEnumerable<Customer>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Guests History</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display" style="min-width: 845px">
+                                <thead>
+                                    <tr>
+                                        <th>S/No</th>
+                                        <th>Full Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                   @{ var item = Model.ToList();}
+                                    @for (int i = 0; i < item.Count; i++)
+                                    {
+                                        var s_no = i + 1;
+                                        <tr>
+                                            <td>@s_no</td>
+                                            <td>@item[i].Name</td>
+                                            <td>@item[i].Phone</td>
+                                            <td>@item[i].Email</td>
+                                            <td></td>
+                                            <td align="right">
+                                                <a asp-action="guestdetails" asp-controller="customers" asp-area="management" asp-route-id="@item[i].CustomerID" class="btn btn-rounded btn-dark">View Records</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

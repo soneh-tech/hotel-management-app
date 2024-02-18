@@ -1,0 +1,172 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model DashboardViewModel
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-two card-body">
+                        <div class="stat-content">
+                            <div class="stat-text">Today Bookings </div>
+                            <div class="stat-digit">@Model.today_bookings</div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-two card-body">
+                        <div class="stat-content">
+                            <div class="stat-text">Total Available Rooms</div>
+                            <div class="stat-digit"> @Model.available_rooms</div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-two card-body">
+                        <div class="stat-content">
+                            <div class="stat-text">Booking Income This Month</div>
+                            <div class="stat-digit">
+                                <label id="lbl_booking_income">
+                                    ₦ @Model.booking_amount_generated
+                                </label>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-warning w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-two card-body">
+                        <div class="stat-content">
+                            <div class="stat-text">Bar & Restaurant Income</div>
+                            <div class="stat-digit">
+                                <label id="lbl_restaurant_income">
+                                    ₦ 0 @* @Model.food_amount_generated *@
+                                </label>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# card -->
+            </div>
+            <!-- /# column -->
+        </div>
+        <div class="row">
+            <div class="col-xl-8 col-lg-8 col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Revenue Overview</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-8">
+                                <div id="morris-bar-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-xl-4 col-lg-4 col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="m-t-10">
+                            <h4 class="card-title">Customer Feedback</h4>
+                            <h2 class="mt-3">@Model.total_reviews</h2>
+                        </div>
+                        <ul class="widget-line-list m-b-15">
+                            <li class="border-right">
+                                @if (Model.total_reviews > 0)
+                                {
+                                    double positive = (Model.positive_reviews / Model.total_reviews) * 100;
+                                    Math.Round(positive);
+                                }
+                                0  % <br><span class="text-success">
+                                    <i class="ti-hand-point-up"></i> Positive
+                                </span>
+                            </li>
+                            <li>
+                                @if (Model.total_reviews > 0)
+                                {
+                                    double positive = (Model.positive_reviews / Model.total_reviews) * 100;
+                                    Math.Round(positive);
+                                }
+                                0 % <br><span class="text-danger">
+                                    <i class="ti-hand-point-down"></i>Negative
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $.ajax({
+                type:"get",
+                url: "@Url.Action("GetRevenueReport")",
+                success: function (data) {
+                    Morris.Bar({
+                        element: 'morris-bar-chart',
+                        data:data,
+                        xkey: 'monthName',
+                        ykeys: ['bookingAmount', 'saleAmount'],
+                        labels: ['Bookings ₦', 'Food & Drinks ₦'],
+                        barColors: ['#343957', '#5873FE'],
+                        hideHover: 'auto',
+                        gridLineColor: '#eef0f2',
+                        resize: true
+                    });
+
+                },
+                error: function (xhr, status, error) { }
+            });
+
+
+
+            var amount = $('#lbl_restaurant_income').text();
+            $('#lbl_restaurant_income').text(formatCurrency(amount));
+
+            var amount = $('#lbl_booking_income').text();
+            $('#lbl_booking_income').text(formatCurrency(amount));
+
+
+        });
+
+
+        function formatCurrency(input) {
+            var str = input.toString();
+            var parts = str.split('.');
+            var whole = parts[0];
+            var decimal = parts.length > 1 ? '.' + parts[1] : '';
+            whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return whole + decimal;
+        }
+
+
+
+    </script>
+}

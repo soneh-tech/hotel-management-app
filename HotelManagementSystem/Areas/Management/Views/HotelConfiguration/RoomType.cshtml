@@ -1,0 +1,51 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model IEnumerable<RoomType>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Room Types</h4>
+                        <button class="btn btn-primary right" type="button" data-toggle="modal" data-target="#roomtype_dialog-0">Add Room Type</button>
+                        @{
+                            var add_model = new RoomTypeViewModel
+            {
+                Ammenities = ViewData["Ammenities"] as ICollection<Ammenity>
+            };
+                        }
+                        @await Html.PartialAsync("_RoomTypePopup",add_model)
+                    </div>
+                    <div class="card-body">
+                        <div id="roomtype_content" class="row">
+                            <partial name="_RoomTypePartialView" model="Model" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function OnSuccess(result) {
+            $(".close").click();
+            $("#roomtype_content").html(result);
+            swal({
+                title: "Good Job !!!",
+                text: "your record was saved successfully",
+                type: "success"
+            });
+        }
+        function OnFailure() {
+            $(".close").click();
+            swal({
+                title: "Oops... ",
+                text: "something went wrong. please try again",
+                type: "wrong"
+            });
+        }
+    </script>
+}

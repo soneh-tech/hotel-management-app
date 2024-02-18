@@ -1,0 +1,410 @@
+﻿@inject SignInManager<AppUser> signInManager;
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-2">
+                <div class="welcome-text">
+                    <h3><span class="text-success" id="lbl_total_booking"><b>₦0</b></span></h3>
+                    <span class="ml-1">Bookings</span>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="welcome-text">
+                    <h3><span class="text-warning" id="lbl_total_bar"><b>₦0</b></span></h3>
+                    <span class="ml-1">Bar</span>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="welcome-text">
+                    <h3><span class="text-secondary" id="lbl_total_restaurant"><b>₦0</b></span></h3>
+                    <span class="ml-1">Restaurant</span>
+                </div>
+            </div>
+            <div class="col-sm-6 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">From</li>
+                    <li class="breadcrumb-item active">
+                        <input class="form-control text-center input-daterange-datepicker" name="daterange" placeholder="01/01/2023 - 01/01/2033" />
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Revenue Analysis</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="morris_bar" class="morris_chart_height"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Donught Chart</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="morris_donught" class="morris_chart_height"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function (start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "get",
+                url: "@Url.Action("GetTodayRevenueReport")",
+                success: function (data) {
+                    Morris.Bar({
+                        element: 'morris_bar',
+                        data: data,
+                        xkey: 'todayTime',
+                        ykeys: ['bookingAmount', 'barAmount', 'restaurantAmount'],
+                        labels: ['Bookings ₦', 'Drinks ₦', 'Food ₦'],
+                        barColors: ['#f25521', '#f9c70a', '#f21780'],
+                        hideHover: 'auto',
+                        gridLineColor: 'transparent',
+                        resize: true,
+                        barSizeRatio: 0.25,
+                    });
+                    var totalBookingAmount = 0;
+                    var totalBarAmount = 0;
+                    var totalRestaurantAmount = 0;
+                    $.each(data, function (index, item) {
+
+                        totalBookingAmount += parseFloat(item.bookingAmount);
+                        totalBarAmount += parseFloat(item.barAmount);
+                        totalRestaurantAmount += parseFloat(item.restaurantAmount);
+                    });
+
+                    $('#lbl_total_booking').text('₦' + formatCurrency(totalBookingAmount));
+                    $('#lbl_total_bar').text('₦' + formatCurrency(totalBarAmount));
+                    $('#lbl_total_restaurant').text('₦' + formatCurrency(totalRestaurantAmount));
+
+                    $("#morris_donught").empty();
+                    Morris.Donut({
+                        element: 'morris_donught',
+                        data: [{
+                            label: "Booking Income",
+                            value: totalBookingAmount,
+
+                        }, {
+                            label: "Restaurant Income",
+                            value: totalRestaurantAmount
+                        }, {
+                            label: "Drinks Income",
+                            value: totalBarAmount
+                        }],
+                        resize: true,
+                        colors: ['#75B432', 'rgb(192, 10, 39)', '#4400eb']
+                    });
+                },
+                error: function (xhr, status, error) { }
+            });
+            $(".input-daterange-datepicker").on("change", function () {
+                var dateRange = $(this).val();
+                var dates = dateRange.split("-");
+                var startDate = $.trim(dates[0]);
+                var endDate = $.trim(dates[1]);
+
+                var start = new Date(startDate);
+                var end = new Date(endDate);
+
+                var differenceInDays = Math.abs((end - start) / (1000 * 60 * 60 * 24));
+                if (differenceInDays == 0) {
+                    $.ajax({
+                        type: "get",
+                        url: "@Url.Action("GetTodayRevenueReport")",
+                        success: function (data) {
+                            $("#morris_bar").empty();
+                            Morris.Bar({
+                                element: 'morris_bar',
+                                data: data,
+                                xkey: 'todayTime',
+                                ykeys: ['bookingAmount', 'barAmount', 'restaurantAmount'],
+                                labels: ['Bookings ₦', 'Drinks ₦', 'Food ₦'],
+                                barColors: ['#f25521', '#f9c70a', '#f21780'],
+                                hideHover: 'auto',
+                                gridLineColor: 'transparent',
+                                resize: true,
+                                barSizeRatio: 0.25,
+                            });
+                            var totalBookingAmount = 0;
+                            var totalBarAmount = 0;
+                            var totalRestaurantAmount = 0;
+                            $.each(data, function (index, item) {
+
+                                totalBookingAmount += parseFloat(item.bookingAmount);
+                                totalBarAmount += parseFloat(item.barAmount);
+                                totalRestaurantAmount += parseFloat(item.restaurantAmount);
+                            });
+
+                            $('#lbl_total_booking').text('₦' + formatCurrency(totalBookingAmount));
+                            $('#lbl_total_bar').text('₦' + formatCurrency(totalBarAmount));
+                            $('#lbl_total_restaurant').text('₦' + formatCurrency(totalRestaurantAmount));
+
+                            $("#morris_donught").empty();
+                            Morris.Donut({
+                                element: 'morris_donught',
+                                data: [{
+                                    label: "Booking Income",
+                                    value: totalBookingAmount,
+
+                                }, {
+                                    label: "Restaurant Income",
+                                    value: totalRestaurantAmount
+                                }, {
+                                    label: "Drinks Income",
+                                    value: totalBarAmount
+                                }],
+                                resize: true,
+                                colors: ['#75B432', 'rgb(192, 10, 39)', '#4400eb']
+                            });
+                        },
+                        error: function (xhr, status, error) { }
+                    });
+                } else if (differenceInDays <= 7) {
+                    $.ajax({
+                        type: "get",
+                        url: "@Url.Action("GetDailyRevenueReport")",
+                        data: { from: startDate, to: endDate },
+                        success: function (data) {
+                            $("#morris_bar").empty();
+                            Morris.Bar({
+                                element: 'morris_bar',
+                                data: data,
+                                xkey: 'bookingDay',
+                                ykeys: ['bookingAmount', 'barAmount', 'restaurantAmount'],
+                                labels: ['Bookings ₦', 'Drinks ₦', 'Food ₦'],
+                                barColors: ['#f25521', '#f9c70a', '#f21780'],
+                                hideHover: 'auto',
+                                gridLineColor: 'transparent',
+                                resize: true,
+                                barSizeRatio: 0.25,
+                            });
+                            var totalBookingAmount = 0;
+                            var totalBarAmount = 0;
+                            var totalRestaurantAmount = 0;
+                            $.each(data, function (index, item) {
+
+                                totalBookingAmount += parseFloat(item.bookingAmount);
+                                totalBarAmount += parseFloat(item.barAmount);
+                                totalRestaurantAmount += parseFloat(item.restaurantAmount);
+                            });
+
+                            $('#lbl_total_booking').text('₦' + formatCurrency(totalBookingAmount));
+                            $('#lbl_total_bar').text('₦' + formatCurrency(totalBarAmount));
+                            $('#lbl_total_restaurant').text('₦' + formatCurrency(totalRestaurantAmount));
+
+                            $("#morris_donught").empty();
+                            Morris.Donut({
+                                element: 'morris_donught',
+                                data: [{
+                                    label: "Booking Income",
+                                    value: totalBookingAmount,
+
+                                }, {
+                                    label: "Restaurant Income",
+                                    value: totalRestaurantAmount
+                                }, {
+                                    label: "Drinks Income",
+                                    value: totalBarAmount
+                                }],
+                                resize: true,
+                                colors: ['#75B432', 'rgb(192, 10, 39)', '#4400eb']
+                            });
+                        },
+                        error: function (xhr, status, error) { }
+                    });
+                } else if (differenceInDays > 7 && differenceInDays <= 31) {
+                    $.ajax({
+                        type: "get",
+                        url: "@Url.Action("GetWeeklyRevenueReport")",
+                        data: { from: startDate, to: endDate },
+                        success: function (data) {
+                            $("#morris_bar").empty();
+                            Morris.Bar({
+                                element: 'morris_bar',
+                                data: data,
+                                xkey: 'weekNumber',
+                                ykeys: ['bookingAmount', 'barAmount', 'restaurantAmount'],
+                                labels: ['Bookings ₦', 'Drinks ₦', 'Food ₦'],
+                                barColors: ['#f25521', '#f9c70a', '#f21780'],
+                                hideHover: 'auto',
+                                gridLineColor: 'transparent',
+                                resize: true,
+                                barSizeRatio: 0.25,
+                            });
+                            var totalBookingAmount = 0;
+                            var totalBarAmount = 0;
+                            var totalRestaurantAmount = 0;
+                            $.each(data, function (index, item) {
+
+                                totalBookingAmount += parseFloat(item.bookingAmount);
+                                totalBarAmount += parseFloat(item.barAmount);
+                                totalRestaurantAmount += parseFloat(item.restaurantAmount);
+                            });
+
+                            $('#lbl_total_booking').text('₦' + formatCurrency(totalBookingAmount));
+                            $('#lbl_total_bar').text('₦' + formatCurrency(totalBarAmount));
+                            $('#lbl_total_restaurant').text('₦' + formatCurrency(totalRestaurantAmount));
+
+                            $("#morris_donught").empty();
+                            Morris.Donut({
+                                element: 'morris_donught',
+                                data: [{
+                                    label: "Booking Income",
+                                    value: totalBookingAmount,
+
+                                }, {
+                                    label: "Restaurant Income",
+                                    value: totalRestaurantAmount
+                                }, {
+                                    label: "Drinks Income",
+                                    value: totalBarAmount
+                                }],
+                                resize: true,
+                                colors: ['#75B432', 'rgb(192, 10, 39)', '#4400eb']
+                            });
+                        },
+                        error: function (xhr, status, error) { }
+                    });
+                } else if (differenceInDays > 31 && differenceInDays <= 365) {
+                    $.ajax({
+                        type: "get",
+                        url: "@Url.Action("GetMonthlyRevenueReport")",
+                        data: { from: startDate, to: endDate },
+                        success: function (data) {
+                            $("#morris_bar").empty();
+                            Morris.Bar({
+                                element: 'morris_bar',
+                                data: data,
+                                xkey: 'monthName',
+                                ykeys: ['bookingAmount', 'barAmount', 'restaurantAmount'],
+                                labels: ['Bookings ₦', 'Drinks ₦', 'Food ₦'],
+                                barColors: ['#f25521', '#f9c70a', '#f21780'],
+                                hideHover: 'auto',
+                                gridLineColor: 'transparent',
+                                resize: true,
+                                barSizeRatio: 0.25,
+                            });
+                            var totalBookingAmount = 0;
+                            var totalBarAmount = 0;
+                            var totalRestaurantAmount = 0;
+                            $.each(data, function (index, item) {
+
+                                totalBookingAmount += parseFloat(item.bookingAmount);
+                                totalBarAmount += parseFloat(item.barAmount);
+                                totalRestaurantAmount += parseFloat(item.restaurantAmount);
+                            });
+
+                            $('#lbl_total_booking').text('₦' + formatCurrency(totalBookingAmount));
+                            $('#lbl_total_bar').text('₦' + formatCurrency(totalBarAmount));
+                            $('#lbl_total_restaurant').text('₦' + formatCurrency(totalRestaurantAmount));
+
+                            $("#morris_donught").empty();
+                            Morris.Donut({
+                                element: 'morris_donught',
+                                data: [{
+                                    label: "Booking Income",
+                                    value: totalBookingAmount,
+
+                                }, {
+                                    label: "Restaurant Income",
+                                    value: totalRestaurantAmount
+                                }, {
+                                    label: "Drinks Income",
+                                    value: totalBarAmount
+                                }],
+                                resize: true,
+                                colors: ['#75B432', 'rgb(192, 10, 39)', '#4400eb']
+                            });
+                        },
+                        error: function (xhr, status, error) { }
+                    });
+                } else {
+                    $.ajax({
+                        type: "get",
+                        url: "@Url.Action("GetYearlyRevenueReport")",
+                        data: { from: startDate, to: endDate },
+                        success: function (data) {
+                            $("#morris_bar").empty();
+                            Morris.Bar({
+                                element: 'morris_bar',
+                                data: data,
+                                xkey: 'yearNumber',
+                                ykeys: ['bookingAmount', 'barAmount', 'restaurantAmount'],
+                                labels: ['Bookings ₦', 'Drinks ₦', 'Food ₦'],
+                                barColors: ['#f25521', '#f9c70a', '#f21780'],
+                                hideHover: 'auto',
+                                gridLineColor: 'transparent',
+                                resize: true,
+                                barSizeRatio: 0.25,
+                            });
+                            var totalBookingAmount = 0;
+                            var totalBarAmount = 0;
+                            var totalRestaurantAmount = 0;
+                            $.each(data, function (index, item) {
+
+                                totalBookingAmount += parseFloat(item.bookingAmount);
+                                totalBarAmount += parseFloat(item.barAmount);
+                                totalRestaurantAmount += parseFloat(item.restaurantAmount);
+                            });
+
+                            $('#lbl_total_booking').text('₦' + formatCurrency(totalBookingAmount));
+                            $('#lbl_total_bar').text('₦' + formatCurrency(totalBarAmount));
+                            $('#lbl_total_restaurant').text('₦' + formatCurrency(totalRestaurantAmount));
+
+                            $("#morris_donught").empty();
+                            Morris.Donut({
+                                element: 'morris_donught',
+                                data: [{
+                                    label: "Booking Income",
+                                    value: totalBookingAmount,
+
+                                }, {
+                                    label: "Restaurant Income",
+                                    value: totalRestaurantAmount
+                                }, {
+                                    label: "Drinks Income",
+                                    value: totalBarAmount
+                                }],
+                                resize: true,
+                                colors: ['#75B432', 'rgb(192, 10, 39)', '#4400eb']
+                            });
+                        },
+                        error: function (xhr, status, error) { }
+                    });
+                }
+
+            });
+        });
+
+        function formatCurrency(input) {
+            var str = input.toString();
+            var parts = str.split('.');
+            var whole = parts[0];
+            var decimal = parts.length > 1 ? '.' + parts[1] : '';
+            whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return whole + decimal;
+        }
+
+    </script>
+}

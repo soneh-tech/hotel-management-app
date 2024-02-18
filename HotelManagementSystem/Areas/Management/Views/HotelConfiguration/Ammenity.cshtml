@@ -1,0 +1,62 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model IEnumerable<Ammenity>
+<div class="content-body">
+    <div class="container-fluid">
+        <!-- row -->
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Ammenities</h4>
+                        <button class="btn btn-primary right" data-toggle="modal" data-target=".bd-example-modal-md">Add Ammenity</button>
+                        @await Html.PartialAsync("_AddAmmenityPopup",new Ammenity())
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display" style="min-width: 845px">
+                                <thead>
+                                    <tr>
+                                        <th>S/No</th>
+                                        <th>Ammenity</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var item = Model.ToList();
+                                        for (int i = 0; i < item.Count; i++)
+                                        {
+                                            var s_no = i + 1;
+                                            <tr>
+                                                <td>@s_no</td>
+                                                <td>@item[i].Name</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td align="right">
+                                                    <button class="btn btn-rounded btn-dark" data-toggle="modal" data-target="@($"#assign-{+ item[i].AmmenityID}")" data-url="@Url.Action($"GetAmmenity/{item[i].AmmenityID}")">Assign Room</button>
+                                                    @await Html.PartialAsync("_AssignAmmenityPopup",item[i])
+                                                    &nbsp;
+                                                    <button class="btn btn-rounded btn-warning text-white" data-toggle="modal" data-target="@($"#modify-{+ item[i].AmmenityID}")" data-url="@Url.Action($"GetAmmenity/{item[i].AmmenityID}")">Modify</button>
+                                                    @await Html.PartialAsync("_ModifyAmmenityPopup",item[i])
+                                                    &nbsp;
+                                                    <button class="btn btn-rounded btn-danger" data-toggle="modal" data-target="@($"#delete-{+ item[i].AmmenityID}")" data-url="@Url.Action($"GetAmmenity/{item[i].AmmenityID}")">Delete</button>
+                                                    @await Html.PartialAsync("_DeleteAmmenityPopup",item[i])
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

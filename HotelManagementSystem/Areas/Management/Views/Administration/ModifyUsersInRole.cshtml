@@ -1,0 +1,48 @@
+﻿@model List<UsersViewModel>
+@{
+    var id = ViewBag.RoleID;
+}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <form method="post">
+                        <div class="card-header">
+                            <h4 class="card-title">Add Or Remove Users From <span class="text-success"><strong>@ViewBag.RoleName</strong></span>  Role</h4>
+                            <button type="button" class="btn btn-primary right" data-toggle="modal" data-target=".bd-example-modal-lg">New User</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example">
+                                    <partial name="_ModifyUsersPartialView" , model="Model" />
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary right">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("_AddUserPopup",new AdminRegisterViewModel());
+
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function OnSuccess() {
+            $(".close").click();
+            toastr.success("record saved successfully...");
+        }
+
+        function OnFailure() {
+            $(".close").click();
+            toastr.error("sorry, an error occured please try again...");
+        }
+
+    </script>
+}

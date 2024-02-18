@@ -1,0 +1,62 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model AboutViewModel
+<div class="content-body">
+    <div class="container-fluid">
+        <form method="post" asp-action="editaboutoffers" asp-controller="cmsconfiguration" asp-area="management"> 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Modify Offers Of About Page</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                                <div class="card-header">
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        @for (var item = 0; item < Model.offers.Count(); item++)
+                                        {
+                                            <div class="form-group col-md-4">
+                                                <input asp-for="@Model.offers.ToList()[item].ID" type="hidden">
+                                                <input asp-for="@Model.offers.ToList()[item].Title" class="form-control">
+                                                <span asp-validation-for="@Model.offers.ToList()[item].Title" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                @{
+                                                    var model = new AboutViewModel { offer = @Model.offers.ToList()[item] };
+                                                }
+                                                <button type="button" class="card-text d-inline btn btn-danger" data-toggle="modal" data-target="@("#delete-" + @Model.offers.ToList()[item].ID)" data-url="@Url.Action($"GetOffer/{Model.offers.ToList()[item].ID}")">Remove</button>
+                                                @await Html.PartialAsync("_DeleteOfferPopup",model)
+                                            </div>
+                                    }
+                                    </div>
+
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-example-modal-lg">Add Offer</button>
+                                    @await Html.PartialAsync("_AddOfferPopup",new Offer())
+
+                                    <button type="submit" class="card-text d-inline btn btn-success text-white pull-right">Save Changes</button>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function OnSuccess() {
+            $(".modal").hide();
+            $(".fade").hide();
+        }
+
+    </script>
+}

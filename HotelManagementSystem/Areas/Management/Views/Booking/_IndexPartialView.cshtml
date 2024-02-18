@@ -1,0 +1,66 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model IEnumerable<Booking>
+<thead>
+    <tr>
+        <th>S/No</th>
+        <th>Full Names</th>
+        <th>Book Date</th>
+        <th>Reference</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    @{
+        var item = Model.ToList();
+        for (int i = 0; i < item.Count; i++)
+        {
+            var s_no = i + 1;
+            var days = @item[i].CheckOut.Date - @item[i].CheckIn.Date;
+            ViewBag.days = days.Days;
+            <tr>
+                <td>@s_no</td>
+                <td>@item[i].Guest.Name</td>
+                <td>@item[i].BookDate</td>
+                <td>@item[i].Reference</td>
+            <td>
+                    @if (item[i].Status == "pending")
+                {
+                        <button type="button" class="text-warning right" data-toggle="modal" data-target="@("#bd-example-modal-md-" + item[i].BookingID)" data-url="@Url.Action($"GetBooking/{item[i].BookingID}")">
+                            @item[i].Status
+                    </button>
+                        @await Html.PartialAsync("_PaymentPopup",item[i])
+                }
+                else
+                {
+                        <p class="text-success right">@item[i].Status</p>
+                }
+            </td>
+            <td>
+                    @if (item[i].IsCheckedOut is true)
+                {
+                    <p class="text-success right">Checked Out</p>
+                }
+                    else if (item[i].Status == "success")
+                    {
+                        @if (item[i].RoomID <= 0)
+                        {
+                            <a class="text-warning right" asp-route-id="@item[i].BookingID" asp-controller="booking" asp-area="management" asp-action="getbookingforassign">Assign Room</a>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-warning right text-white" data-toggle="modal" data-target="@("#extend-" + item[i].BookingID)" data-url="@Url.Action($"GetBooking/{item[i].BookingID}")">Extend Booking</button>
+                            @await Html.PartialAsync("_ExtendBookingPopup",item[i])
+                            <a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#example" data-ajax-complete="OnComplete" asp-action="checkoutbooking" asp-controller="booking" asp-area="management" asp-route-id="@item[i].BookingID" class="btn btn-danger right text-white">Check Out</a>
+                        }
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-danger right text-white" data-toggle="modal" data-target="@("#cancel-" + item[i].BookingID)" data-url="@Url.Action($"GetBooking/{item[i].BookingID}")">Cancel Booking</button>
+                        @await Html.PartialAsync("_DeleteBookingPopup",item[i])
+                    } 
+            </td>
+        </tr>
+    }
+    }
+</tbody>

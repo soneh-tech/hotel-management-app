@@ -1,0 +1,336 @@
+﻿@inject SignInManager<AppUser> signInManager;
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Wallgate - Apartments Admin Dashboard </title>
+    <link href="~/vendor/datatables/css/jquery.datatables.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/vendor/select2/css/select2.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/vendor/toastr/css/toastr.min.css" asp-append-version="true" />
+    <link href="~/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/vendor/pickadate/themes/default.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/vendor/pickadate/themes/default.date.css" asp-append-version="true" />
+    <link href="~/vendor/bootstrap-daterangepicker/daterangepicker.css" asp-append-version="true" rel="stylesheet"/>
+ 
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a asp-action="index" asp-controller="dashboard" asp-area="management" class="brand-logo">
+                <p class="brand-title">Admin</p>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+                            <div class="search_bar dropdown">
+                                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                                    <i class="mdi mdi-magnify"></i>
+                                </span>
+                                <div class="dropdown-menu p-0 m-0">
+                                    <form>
+                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="navbar-nav header-right">
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <i class="mdi mdi-bell"></i>
+                                    <div class="pulse-css"></div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="list-unstyled">
+                                        <li class="media dropdown-item">
+                                            <span class="success"><i class="ti-user"></i></span>
+                                            <div class="media-body">
+                                                <a href="#">
+                                                    <p>
+                                                        <strong>Martin</strong> has added a <strong>customer</strong> Successfully
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <span class="notify-time">3:20 am</span>
+                                        </li>
+                                    </ul>
+                                    <a class="all-notification" href="#">
+                                        See all notifications <i class="ti-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <i class="mdi mdi-account"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a asp-action="profile" asp-controller="account" class="dropdown-item">
+                                        <i class="icon-user"></i>
+                                        <span class="ml-2">Profile </span>
+                                    </a>
+                                    <a asp-action="logout" asp-controller="account" class="dropdown-item">
+                                        <i class="icon-key"></i>
+                                        <span class="ml-2">Logout </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="quixnav">
+            <div class="quixnav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label first">Overviews</li>
+
+                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Manager")))
+                    {
+                        <li>
+                            <a asp-area="management" asp-action="index" asp-controller="dashboard">
+                                <i class="icon icon-app-store"></i><span class="nav-text">Dashboard</span>
+                            </a>
+                        </li>
+                    }
+                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Receptionist")))
+                    {
+                        <li>
+                            <a asp-area="management" asp-action="index" asp-controller="booking">
+                                <i class="icon icon-world-2"></i><span class="nav-text">Bookings</span>
+                            </a>
+                        </li>
+                        @*    <li>
+                    <a asp-area="management" asp-action="availability" asp-controller="booking">
+                    <i class="icon icon-single-copy-06"></i><span class="nav-text">Availability</span>
+                    </a>
+                    </li>*@
+                        <li>
+                            <a asp-area="management" asp-action="index" asp-controller="customers">
+                                <i class="icon icon-single-04"></i><span class="nav-text">Guests</span>
+                            </a>
+                        </li>
+                    }
+                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+                    {
+                        <li class="nav-label">Settings</li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon icon-plug"></i><span class="nav-text">Hotel Configuration</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a asp-area="management" asp-action="roomtype" asp-controller="hotelconfiguration">Room Types</a></li>
+                                <li><a asp-area="management" asp-action="room" asp-controller="hotelconfiguration">Rooms</a></li>
+                                @* <li><a asp-area="management" asp-action="ammenity" asp-controller="hotelconfiguration">Ammenities</a></li>*@
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon icon-plug"></i><span class="nav-text">CMS Configuration</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a asp-area="management" asp-action="home" asp-controller="cmsconfiguration" target="_blank">Home Page</a></li>
+                                <li>
+                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                        <span class="nav-text">About Page</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li><a asp-area="management" asp-action="aboutmain" asp-controller="cmsconfiguration" target="_blank">Main Content</a></li>
+                                        <li><a asp-area="management" asp-action="aboutoffers" asp-controller="cmsconfiguration" target="_blank">Offers</a></li>
+                                        <li><a asp-area="management" asp-action="aboutservices" asp-controller="cmsconfiguration" target="_blank">Services</a></li>
+                                        <li><a asp-area="management" asp-action="aboutgalleries" asp-controller="cmsconfiguration" target="_blank">Gallery</a></li>
+                                    </ul>
+                                </li>
+                                <li><a asp-area="management" asp-action="news" asp-controller="cmsconfiguration" target="_blank">News Page</a></li>
+                                <li><a asp-area="management" asp-action="contact" asp-controller="cmsconfiguration" target="_blank">Contact Page</a></li>
+                                <li><a asp-area="management" asp-action="socialmedia" asp-controller="cmsconfiguration" target="_blank">Social Media</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon icon-plug"></i><span class="nav-text">Bar &amp; Restaurant</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a asp-area="management" asp-action="index" asp-controller="restaurant">Products</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon icon-plug"></i><span class="nav-text">Designations</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a asp-area="management" asp-action="index" asp-controller="administration">Roles</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Waiter")))
+                    {
+                        <li class="nav-label">Sales</li>
+                        <li>
+                            <a asp-area="management" asp-action="index" asp-controller="sales">
+                                <i class="icon icon-single-04"></i><span class="nav-text">Food & Drink Purchase</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Manager")))
+                    {
+                        <li class="nav-label">Reports</li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon icon-chart-bar-33"></i><span class="nav-text">Bookings Report</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a asp-area="management" asp-action="occupancy" asp-controller="report">Occupancy &amp; Revenue</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon icon-chart-bar-33"></i><span class="nav-text">Sales Report</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a asp-area="management" asp-action="restaurant" asp-controller="report">Bar &amp; Restaurant Revenue</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon icon-chart-bar-33"></i><span class="nav-text">Analysis</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a asp-area="management" asp-action="revenue" asp-controller="report">Chart Analysis</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        @RenderBody();
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; @DateTime.Now.Year, All Rights Reserved | Powered By Soneh Technologies</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js" asp-append-version="true"></script>
+    @if (IsSectionDefined("Scripts"))
+    {
+        await RenderSectionAsync("Scripts", required: false);
+    }
+
+    <!-- Required vendors -->
+    <script src="~/vendor/global/global.min.js" asp-append-version="true"></script>
+    <script src="~/js/quixnav-init.js" asp-append-version="true"></script>
+    <script src="~/js/custom.min.js" asp-append-version="true"></script>
+
+    <!-- morris chart -->
+    <script src="~/vendor/raphael/raphael.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/morris/morris.min.js" asp-append-version="true"></script>
+
+    <script src="~/js/dashboard/dashboard-1.js" asp-append-version="true"></script>
+    <!-- Datatable -->
+    <script src="~/vendor/datatables/js/jquery.datatables.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins-init/datatables.init.js" asp-append-version="true"></script>
+
+    <!-- Pickadate -->
+    <script src="~/vendor/pickadate/picker.js" asp-append-version="true"></script>
+    <script src="~/vendor/pickadate/picker.time.js" asp-append-version="true"></script>
+    <script src="~/vendor/pickadate/picker.date.js" asp-append-version="true"></script>
+    <script src="~/js/plugins-init/pickadate-init.js" asp-append-version="true"></script>
+
+    <!--Date Range Picker-->
+    <script src="~/vendor/moment/moment.min.js" asp-append-version="true"></script>
+    <script src="~/vendor/bootstrap-daterangepicker/daterangepicker.js" defer asp-append-version="true"></script>
+    <script src="~/js/plugins-init/bs-daterange-picker-init.js" asp-append-version="true"></script>
+
+    <!-- Select2 -->
+    <script src="~/vendor/select2/js/select2.full.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins-init/select2-init.js"></script>
+
+
+    <!-- Toastr -->
+    <script src="~/vendor/toastr/js/toastr.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins-init/toastr-init.js" asp-append-version="true"></script>
+
+
+    <script src="~/vendor/sweetalert2/dist/sweetalert2.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins-init/sweetalert.init.js" asp-append-version="true"></script>
+
+   
+</body>
+
+</html>

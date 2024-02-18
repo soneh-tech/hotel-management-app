@@ -1,0 +1,65 @@
+﻿@{
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Wallgate - Apartments Admin Dashboard </title>
+    <!-- Favicon icon -->
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+
+</head>
+
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container-fluid h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center">
+                        <div class="mb-5">
+                            <a class="btn btn-primary" asp-area="management" asp-controller="dashboard" asp-action="index">Back to Dashboard</a>
+                        </div>
+                        @{
+                            switch (ViewBag.StatusCode)
+                            {
+                                case 503:
+                                    <h1 class="error-text font-weight-bold">503</h1>
+                                    <h4 class="mt-4"><i class="fa fa-times-circle text-danger"></i> Service Unavailable</h4>
+                                    <p>Sorry, we are under maintenance!</p>
+                                    break;
+                                case 500:
+                                    <h1 class="error-text font-weight-bold">500</h1>
+                                    <h4 class="mt-4"><i class="fa fa-times-circle text-danger"></i> Internal Server Error</h4>
+                                    <p>You do not have permission to view this resource</p>
+                                    break;
+                                case 404:
+                                    <h1 class="error-text font-weight-bold">404</h1>
+                                    <h4 class="mt-4"><i class="fa fa-exclamation-triangle text-warning"></i> The page you were looking for is not found!</h4>
+                                    <p>You may have mistyped the address or the page may have moved.</p>
+                                    break;
+                                case 403:
+                                    <h1 class="error-text  font-weight-bold">403</h1>
+                                    <h4 class="mt-4"><i class="fa fa-times-circle text-danger"></i> Forbidden Error!</h4>
+                                    <p>You do not have permission to view this resource.</p>
+                                    break;
+                                case 400:
+                                    <h1 class="error-text font-weight-bold">400</h1>
+                                    <h4 class="mt-4"><i class="fa fa-thumbs-down text-danger"></i> Bad Request</h4>
+                                    <p>Your Request resulted in an error</p>
+                                    break;
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

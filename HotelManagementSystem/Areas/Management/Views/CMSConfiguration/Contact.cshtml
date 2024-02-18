@@ -1,0 +1,69 @@
+﻿@inject SignInManager<AppUser> signInManager;
+@model ContactViewModel;
+<div class="content-body">
+    <div class="container-fluid">
+
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Modify Public Contact Page</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form data-ajax="true" data-ajax-method="post" data-ajax-success="OnSuccess" data-ajax-failure="OnFailure" asp-action="editcontact" asp-controller="cmsconfiguration" asp-area="management">
+                                <input type="hidden" asp-for="contact.ID">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="contact.Email">Email Address</label>
+                                        <input asp-for="contact.Email" class="form-control">
+                                        <span asp-validation-for="contact.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="contact.Phone">Phone Number</label>
+                                        <input asp-for="contact.Phone" class="form-control">
+                                        <span asp-validation-for="contact.Phone" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="contact.Address">Contact Address</label>
+                                        <textarea rows="4" asp-for="contact.Address" class="form-control"></textarea>
+                                        <span asp-validation-for="contact.Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="contact.ShortDescription">Contact Description</label>
+                                        <textarea rows="4" asp-for="contact.ShortDescription" class="form-control"></textarea>
+                                        <span asp-validation-for="contact.ShortDescription" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function OnSuccess() {
+            swal({
+                title: "Good Job !!!",
+                text: "your record was saved successfully",
+                type: "success"
+            });
+        }
+        function OnFailure() {
+            swal({
+                title: "Oops... ",
+                text: "something went wrong. please try again",
+                type: "wrong"
+            });
+        }
+
+    </script>
+}
