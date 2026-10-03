@@ -32,7 +32,7 @@
                         </div>
                         <a href="#" class="bk-btn">Reserve Now</a>
                        <div class="language-option">
-                            @if (signInManager.IsSignedIn(User))
+                       @*      @if (signInManager.IsSignedIn(User))
                             {
                                 <form method="post" asp-action="signout" asp-controller="account" asp-area="management">
                                     Login:  @User.Identity.Name
@@ -47,7 +47,7 @@
                                         <li><a asp-action="register" asp-controller="account" asp-area="management">Register</a></li>
                                     </ul>
                                 </div>
-                            }
+                            } *@
                             </div>
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                             <div class="hp-room-item set-bg" data-setbg="/images/rooms/@ViewBag.room_image">
                                 <div class="hr-text">
                                     <h3>@item.Name</h3>
-                                    <h2># @item.Price<span>/Pernight</span></h2>
+                                    <h2>₦ @item.Price<span>/Pernight</span></h2>
                                     <table>
                                         <tbody>
                                             <tr>

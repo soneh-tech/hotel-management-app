@@ -26,7 +26,13 @@ builder.Services.AddDbContext<AppDbContext>
 builder.Services.AddIdentity<AppUser, IdentityRole>( o=> { o.SignIn.RequireConfirmedEmail = true; })
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
-builder.Services.ConfigureApplicationCookie(o => { o.LoginPath = "/Management/Account/Index"; });
+builder.Services.ConfigureApplicationCookie(o => {
+    o.Cookie.HttpOnly = true;
+    o.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    o.LoginPath = "/Account/Login";
+    o.AccessDeniedPath = "/Account/AccessDenied";
+    o.SlidingExpiration = true;
+});
 builder.Services.AddScoped<IManagementRepository, ManagementService>();
 builder.Services.AddScoped<ICMSRepository, CMSService>();
 
